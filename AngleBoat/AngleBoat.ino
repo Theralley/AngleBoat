@@ -8,7 +8,7 @@
 #define DIO 9
 
 // The amount of time (in milliseconds) between tests
-#define TEST_DELAY   2000
+#define TEST_DELAY   1500
 
 const int MPU_addr = 0x68; // I2C address of the MPU-6050
 int16_t AcX, AcY, AcZ, Tmp, GyX, GyY, GyZ;
@@ -50,24 +50,25 @@ void loop() {
     Serial.print(" | GyX = "); Serial.println(GyX);
     //Serial.print(" | GyY = "); Serial.print(GyY / (180 / 3.141592));
     //Serial.print(" | GyZ = "); Serial.println(GyZ / (180 / 3.141592));
-    GyX = (((1-k_throttle)*OldGyX) + (k_throttle*GyX));
-    GyX = OldGyX;
-    
+    //GyX = (((1-k_throttle)*OldGyX) + (k_throttle*GyX));
+    //GyX = OldGyX;
+    Serial.print(" Current Y: "); Serial.print(GyY/ (180 / 3.141592));
+    Serial.print(" Current X: "); Serial.print(GyX/ (180 / 3.141592));
+    Serial.print(" Current Z: "); Serial.print(GyZ/ (180 / 3.141592));
   display.setBrightness(0x0f);
 
-  display.setSegments(data);
-  display.showNumberDec(GyX, false, 2,1);
+  //display.setSegments(data);
+  //display.showNumberDec(GyX, false, 2,1);
   
   display.setSegments(data);
-  display.showNumberDec(153, false, 3, 1);
+  display.showNumberDec(9999, false, 4, 1);
   delay(TEST_DELAY);
 
   display.setSegments(data);
-  for(int i=0; i<=500; i++)
+  /**for(int i=0; i<=10; i++)
   {
     display.showNumberDec(i);
-  }
+  }*/
     
-    delay(100);
+    //delay(100);
 }
-/* Hello World!!!!!
