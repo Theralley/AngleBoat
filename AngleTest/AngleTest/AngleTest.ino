@@ -6,6 +6,10 @@ int16_t AcX,AcY,AcZ,Tmp,GyX,GyY,GyZ;
 int minVal=624; // 589
 int maxVal=734; // 734
 
+int xAngRes = 0;
+int yAngRes = 0;
+int zAngRes = 0;
+
 double y;
 
 void setup(){
@@ -15,7 +19,17 @@ void setup(){
   Wire.write(0);
   Wire.endTransmission(true);
   Serial.begin(9600);
-  
+
+  Wire.write(0x3B);
+  Wire.endTransmission(false);
+  Wire.requestFrom(MPU_addr,14,true);
+  AcXRes=Wire.read()<<8|Wire.read();
+  AcYRes=Wire.read()<<8|Wire.read();
+  AcZRes=Wire.read()<<8|Wire.read();
+
+  xAngRes = map(AcX,minVal,maxVal,-90,90);
+  yAngRes = map(AcY,minVal,maxVal,-90,90);
+  zAngRes = map(AcZ,minVal,maxVal,-90,90);
 }
 void loop(){
       
@@ -30,6 +44,10 @@ void loop(){
   int yAng = map(AcY,minVal,maxVal,-90,90);
   int zAng = map(AcZ,minVal,maxVal,-90,90);
 
+  xAng = xAng - xAngRes;
+  yAng = yAng - yAngRes;
+  zAng = zAng - zAngRes;
+  
    y= RAD_TO_DEG * (atan2(-xAng, -zAng)+PI);
    
    Serial.print("AngleY= ");
