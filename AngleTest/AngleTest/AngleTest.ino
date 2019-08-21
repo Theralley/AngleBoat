@@ -5,6 +5,7 @@ int16_t AcX,AcY,AcZ,Tmp,GyX,GyY,GyZ;
 
 int minVal=624; // 589
 int maxVal=734; // 734
+static int Dnr = 1000;
 
 int xAngRes = 0;
 int yAngRes = 0;
@@ -31,8 +32,8 @@ void setup(){
   yAngRes = map(AcY,minVal,maxVal,-90,90);
   zAngRes = map(AcZ,minVal,maxVal,-90,90);
 }
+
 void loop(){
-      
   Wire.beginTransmission(MPU_addr);
   Wire.write(0x3B);
   Wire.endTransmission(false);
@@ -55,5 +56,5 @@ void loop(){
    
    Serial.println("-----------------------------------------");
 
-   delay(1000);
+   delay(Dnr);
 }
