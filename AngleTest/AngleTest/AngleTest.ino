@@ -1,7 +1,7 @@
 #include<Wire.h>
 
 const int MPU_addr=0x68;
-int16_t AcX,AcY,AcZ,Tmp,GyX,GyY,GyZ;
+int16_t AcX,AcY,AcZ,Tmp,GyX,GyY,GyZ,AcXRes, AcYRes, AcZRes;
 
 int minVal=624; // 589
 int maxVal=734; // 734
@@ -28,9 +28,9 @@ void setup(){
   AcYRes=Wire.read()<<8|Wire.read();
   AcZRes=Wire.read()<<8|Wire.read();
 
-  xAngRes = map(AcX,minVal,maxVal,-90,90);
-  yAngRes = map(AcY,minVal,maxVal,-90,90);
-  zAngRes = map(AcZ,minVal,maxVal,-90,90);
+  xAngRes = map(AcXRes,minVal,maxVal,-90,90);
+  yAngRes = map(AcYRes,minVal,maxVal,-90,90);
+  zAngRes = map(AcZRes,minVal,maxVal,-90,90);
 }
 
 void loop(){
